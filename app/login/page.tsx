@@ -26,32 +26,28 @@ const LoginPage = () => {
       });
 
       if (data.status == true) {
-        console.log("Login berhasil:", data);
-
-        toast(data.message, {
-          hideProgressBar: true,
-          containerId: `toastLogin`,
-          type: "success",
-          autoClose: 2000,
-        });
-        storeCookie("token", data.token);
-        storeCookie("id", data.data.id);
-        storeCookie("name", data.data.name);
-        storeCookie("role", data.data.role);
-
-        let role = data.data.role;
-
-        if (role === `Penjual`)
-          setTimeout(() => router.replace(`/manager/dashboard`), 1000);
-        else if (role === `Pelanggan`)
-          setTimeout(() => router.replace(`/dashboard`));
-        else
+        if (data.data.role === `Pelanggan`) {
           toast(data.message, {
             hideProgressBar: true,
             containerId: `toastLogin`,
-            type: "warning",
+            type: "success",
+            autoClose: 2000,
           });
-      }
+          storeCookie("token", data.token);
+          storeCookie("id", data.data.id);
+          storeCookie("name", data.data.name);
+          storeCookie("role", data.data.role);
+
+          setTimeout(() => router.replace(`/user/landing-page`), 1000);
+        } else {
+          toast.warn("Akses hanya untuk user!", { containerId: "toastLogin" });
+        }
+      } else
+        toast(data.message, {
+          hideProgressBar: true,
+          containerId: `toastLogin`,
+          type: "warning",
+        });
     } catch (error) {
       console.log(error);
       toast(`Something wrong`, {

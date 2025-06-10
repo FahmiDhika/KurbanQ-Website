@@ -10,7 +10,7 @@ interface IPropMenu {
   icon: ReactNode;
 }
 
-let menuList: IPropMenu[] = [
+let userList: IPropMenu[] = [
   {
     id: `user`,
     path: `/profile`,
@@ -25,4 +25,4 @@ let menuList: IPropMenu[] = [
   },
 ];
 
-export default menuList;
+export default userList;
